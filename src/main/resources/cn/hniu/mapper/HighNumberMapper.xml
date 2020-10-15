@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hniu.mapper.HighNumberMapper">
+
+    <resultMap id="HighNumberAndGroupField" type="hNGroup">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <collection property="highNumber" ofType="highNumber">
+            <id property="id" column="id"/>
+            <result property="title" column="title"/>
+            <result property="content" column="content"/>
+            <result property="status" column="status"/>
+            <result property="filePath" column="filePath"/>
+            <result property="createDate" column="create_date"/>
+            <result property="name" column="f_name"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryAllHighNumber" resultMap="HighNumberAndGroupField">
+        SELECT
+            *
+        FROM
+            high_number h
+        INNER JOIN groupinfo g ON h.groupId = g.id
+        WHERE
+	        h. STATUS = 1
+        GROUP BY
+            h.groupId
+    </select>
+
+    <select id="queryAllHighNumbers" resultMap="HighNumberAndGroupField">
+        SELECT
+            *
+        FROM
+            high_number h
+        INNER JOIN groupinfo g ON h.groupId = g.id
+        WHERE
+	        STATUS = 1
+    </select>
+
+    <select id="queryHighNumByGroupNum" resultMap="HighNumberAndGroupField">
+        SELECT
+            *
+        FROM
+            high_number h
+        INNER JOIN groupinfo g ON h.groupId = g.id
+        WHERE
+            h.groupId = #{groupId} and h.status = 1
+    </select>
+</mapper>

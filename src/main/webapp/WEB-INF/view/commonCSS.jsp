@@ -1,0 +1,1 @@
+<link href="${APP_PATH}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
